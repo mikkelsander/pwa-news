@@ -3,25 +3,22 @@
 import Vue from 'vue'
 import VueOnsen from 'vue-onsenui'
 import App from './App'
-import newsService from './newsService';
+import newsService from './services/newsService';
 
 import 'onsenui/css/onsenui.css';
 import 'onsenui/css/onsen-css-components.css';
 
 Vue.use(VueOnsen);
 
-
-
-
 const service = new newsService();
 
-service.getSources().then(sources => sources.map(source => {
-  console.log(source.name);
-}))
+// service.getSources().then(sources => sources.map(source => {
+//   console.log(source.url);
+// }))
 
-service.getNewsFromSource('the-washington-post').then(articles => articles.map(article => {
-  console.log(article.title);
-}))
+// service.getNewsFromSource('the-washington-post').then(articles => articles.map(article => {
+//   console.log(article.title);
+// }))
 
 Vue.config.productionTip = false
 

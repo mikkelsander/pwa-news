@@ -1,8 +1,12 @@
 <template>
   <div id="app">
-    <v-ons-navigator :page-stack="pageStack">
-      <component v-for="page in pageStack" :is="page" :key="page" :page-stack="pageStack"></component>
-    </v-ons-navigator>
+    <v-ons-page>
+
+      <v-ons-navigator :page-stack="pageStack">
+        <component v-for="page in pageStack" :is="page" :key="page.toString()" :page-stack="pageStack"></component>
+      </v-ons-navigator>
+
+    </v-ons-page>
   </div>
 </template>
 

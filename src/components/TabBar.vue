@@ -2,7 +2,7 @@
   <v-ons-page>
 
     <v-ons-toolbar>
-      <div class="center" style="text-align: center">{{ title }}</div>
+      <div class="center center-text">News app</div>
     </v-ons-toolbar>
 
     <v-ons-tabbar swipeable position="auto" :tabs="tabs" :index.sync="activeIndex">
@@ -11,14 +11,13 @@
       </template>
     </v-ons-tabbar>
 
-
   </v-ons-page>
 </template>
 
 <script>
-import Browse from './Browse';
-import Feed from './Feed';
-import Settings from './Settings';
+import Browse from './browse/Browse';
+import Feed from './feed/Feed';
+import Settings from './settings/Settings';
 
 export default {
   props: ['pageStack'],
@@ -34,7 +33,7 @@ export default {
         },
         {
           icon: this.md() ? null : 'ion-ios-settings',
-          label: 'Browse',
+          label: 'Discover',
           page: Browse
         },
 
@@ -60,7 +59,9 @@ export default {
   }
 };
 </script>
-</script>
 
-<style>
+<style scoped>
+.center-text {
+  text-align: center;
+}
 </style>
