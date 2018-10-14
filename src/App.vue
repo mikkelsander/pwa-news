@@ -1,16 +1,25 @@
 <template>
   <div id="app">
-    <h1>
-      WORKS!
-    </h1>
-    <router-view/>
+    <v-ons-navigator :page-stack="pageStack">
+      <component v-for="page in pageStack" :is="page" :key="page" :page-stack="pageStack"></component>
+    </v-ons-navigator>
   </div>
 </template>
 
 <script>
+import TabBar from './components/TabBar';
+
 export default {
-  name: 'App'
-}
+  name: 'App',
+  components: {
+    TabBar
+  },
+  data() {
+    return {
+      pageStack: [TabBar]
+    };
+  }
+};
 </script>
 
 <style>
