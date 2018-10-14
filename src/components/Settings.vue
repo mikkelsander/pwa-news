@@ -1,8 +1,6 @@
 <template>
   <v-ons-page>
-
-    <h1>Browse</h1>
-
+    <h1>Settings</h1>
   </v-ons-page>
 </template>
 
