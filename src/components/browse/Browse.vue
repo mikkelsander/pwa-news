@@ -1,27 +1,26 @@
 <template>
   <v-ons-page>
-    <p>
-      <v-ons-search-input placeholder="Search" v-model="query"></v-ons-search-input>
-    </p>
+
+    <v-ons-search-input class="search-field" placeholder="Search" v-model="query"></v-ons-search-input>
 
     <h3>Discover top headlines</h3>
     <!-- <img src="@/assets/country-flags/ar.svg"></img> -->
 
     <div class="center">
-      <v-ons-segment class="browse-filter-buttons" :index.sync="segmentIndex">
+      <v-ons-segment class="filter-buttons" :index.sync="segmentIndex">
         <button @click="displaySourceList = true">Popular publishers</button>
         <button @click="displaySourceList = false">Countries</button>
       </v-ons-segment>
 
 
-      <div class="browse-grid" v-show="displaySourceList">
-        <source-card class="browse-item" v-for="source in sourceList" :title="source.name" :url="source.url"
+      <div class="grid" v-show="displaySourceList">
+        <source-card class="grid-item" v-for="source in sourceList" :title="source.name" :url="source.url"
           :description="source.description" :category="source.category" :key="source.id">
         </source-card>
       </div>
 
-      <div class="browse-grid" v-show="!displaySourceList">
-        <country-card class="browse-item" v-for="country in countryList" :title="country.name" :code="country.code" :key="country.name">
+      <div class="grid" v-show="!displaySourceList">
+        <country-card class="grid-item" v-for="country in countryList" :title="country.name" :code="country.code" :key="country.name">
         </country-card>
       </div>
 
@@ -132,28 +131,32 @@ export default {
 
     this.sourceList = sourceList;
     this.countryList = countryList;
-    console.log(countryList);
   }
 };
 </script>
 
 <style scoped>
-.browse-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: left;
+.grid {
+  display: grid;
+  width: 100vw;
+  grid-auto-flow: row;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
 }
 
-.browse-item {
-  width: 45%;
-}
-
-p {
-  margin-bottom: 2rem;
-}
-
-.browse-filter-buttons {
+.filter-buttons {
   width: 80%;
   margin-bottom: 1rem;
+}
+
+.search-field {
+  margin: 2rem;
+}
+
+@media (min-width: 480px) {
+  /* medium */
+}
+@media (min-width: 720px) {
+  /* large */
 }
 </style>

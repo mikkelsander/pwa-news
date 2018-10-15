@@ -1,9 +1,9 @@
 <template>
   <v-ons-card>
 
-    <img class="icon" :alt="title" :src="flagUrl"
-      referrerpolicy="no-referrer"
-      data-was-processed="true">
+    <div>
+      <img :alt="title" :src="flagUrl">
+    </div>
 
     <div> {{ title }}</div>
 
@@ -33,8 +33,14 @@ export default {
 </script>
 
 <style scoped>
-/* img {
-  height: 30px;
-  width: 30px;
-} */
+img {
+  max-width: 100%;
+}
+
+@media (min-width: 480px) {
+  /* medium */
+}
+@media (min-width: 720px) {
+  /* large */
+}
 </style>
