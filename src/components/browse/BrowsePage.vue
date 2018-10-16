@@ -1,37 +1,38 @@
 <template>
-  <v-ons-page>
+    <v-ons-page>
 
-    <v-ons-search-input class="search-field" placeholder="Search" v-model="query"></v-ons-search-input>
+      <v-ons-search-input class="search-field" placeholder="Search" v-model="query"></v-ons-search-input>
 
-    <h3>Discover top headlines</h3>
-    <!-- <img src="@/assets/country-flags/ar.svg"></img> -->
+      <h3>Discover top headlines</h3>
 
-    <div class="center">
-      <v-ons-segment class="filter-buttons" :index.sync="segmentIndex">
-        <button @click="displaySourceList = true">Popular publishers</button>
-        <button @click="displaySourceList = false">Countries</button>
-      </v-ons-segment>
+      <div class="center">
+        <v-ons-segment class="filter-buttons" :index.sync="segmentIndex">
+          <button @click="displaySourceList = true">Popular publishers</button>
+          <button @click="displaySourceList = false">Countries</button>
+        </v-ons-segment>
 
+        <div class="grid" v-show="displaySourceList">
+          <source-card class="grid-item" v-for="source in sourceList" :title="source.name" :url="source.url"
+            :description="source.description" :category="source.category" :key="source.id" @card-clicked="openSourcePage(source)">
+          </source-card>
+        </div>
 
-      <div class="grid" v-show="displaySourceList">
-        <source-card class="grid-item" v-for="source in sourceList" :title="source.name" :url="source.url"
-          :description="source.description" :category="source.category" :key="source.id">
-        </source-card>
+        <div class="grid" v-show="!displaySourceList">
+          <country-card class="grid-item" v-for="country in countryList" :title="country.name" :code="country.code" :key="country.name"  @card-clicked="openCountryPage(country)">
+          </country-card>
+        </div>
+
       </div>
 
-      <div class="grid" v-show="!displaySourceList">
-        <country-card class="grid-item" v-for="country in countryList" :title="country.name" :code="country.code" :key="country.name">
-        </country-card>
-      </div>
-
-    </div>
-
-  </v-ons-page>
+    </v-ons-page>
 </template>
 
 <script>
-import SourceCard from './SourceCard';
 import CountryCard from './CountryCard';
+import CountryPage from './CountryPage';
+import SourceCard from './SourceCard';
+import SourcePage from './SourcePage';
+
 import NewsService from '@/services/newsService.js';
 import countryList from '@/available-countries.js';
 
@@ -50,9 +51,10 @@ export default {
       displaySourceList: true
     };
   },
+
   created() {
     // const service = new NewsService();
-    // service.getsourceList().then(sourceList => {
+    // service.getSources().then(sourceList => {
     //   this.sourceList = sourceList;
     //   console.log(sourceList);
     // });
@@ -61,7 +63,7 @@ export default {
       {
         category: 'general',
         country: 'us',
-        description: '',
+        description: 'This is a description',
         id: 'abc-news',
         language: 'en',
         name: 'ABC News',
@@ -131,6 +133,36 @@ export default {
 
     this.sourceList = sourceList;
     this.countryList = countryList;
+  },
+  methods: {
+    openSourcePage(source) {
+      console.log(source);
+      this.pageStack.push({
+        ...SourcePage,
+        data() {
+          return {
+            id: source.id,
+            title: source.name,
+            url: source.url,
+            language: source.language,
+            description: source.description,
+            category: source.category
+          };
+        }
+      });
+    },
+    openCountryPage(country) {
+      console.log(country);
+      this.pageStack.push({
+        ...CountryPage,
+        data() {
+          return {
+            code: country.code,
+            name: country.name
+          };
+        }
+      });
+    }
   }
 };
 </script>

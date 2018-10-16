@@ -1,5 +1,5 @@
 <template>
-  <v-ons-card>
+  <v-ons-card @click="$emit('card-clicked')">
 
     <div>
       <img :alt="title" :src="flagUrl">

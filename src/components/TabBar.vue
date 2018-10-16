@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import Browse from './browse/Browse';
-import Feed from './feed/Feed';
-import Settings from './settings/Settings';
+import BrowsePage from './browse/BrowsePage';
+import FeedPage from './feed/FeedPage';
+import SettingsPage from './settings/SettingsPage';
 
 export default {
   props: ['pageStack'],
@@ -27,20 +27,20 @@ export default {
       activeIndex: 0,
       tabs: [
         {
-          icon: this.md() ? null : 'ion-home',
+          // icon: this.md() ? null : 'ion-home',
           label: 'Feed',
-          page: Feed
+          page: FeedPage
         },
         {
-          icon: this.md() ? null : 'ion-ios-settings',
+          // icon: this.md() ? null : 'ion-ios-settings',
           label: 'Discover',
-          page: Browse
+          page: BrowsePage
         },
 
         {
-          icon: this.md() ? null : 'ion-ios-settings',
+          // icon: this.md() ? null : 'ion-ios-settings',
           label: 'Settings',
-          page: Settings
+          page: SettingsPage
         }
       ]
     };
