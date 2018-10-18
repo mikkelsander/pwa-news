@@ -134,34 +134,17 @@ export default {
     this.sourceList = sourceList;
     this.countryList = countryList;
   },
+
   methods: {
-    openSourcePage(source) {
-      console.log(source);
-      this.pageStack.push({
-        ...SourcePage,
-        data() {
-          return {
-            id: source.id,
-            title: source.name,
-            url: source.url,
-            language: source.language,
-            description: source.description,
-            category: source.category
-          };
-        }
-      });
+
+    async openCountryPage(country) {
+      this.$store.commit('updateCountryPageInfo', country);
+      this.pageStack.push(CountryPage);
     },
-    openCountryPage(country) {
-      console.log(country);
-      this.pageStack.push({
-        ...CountryPage,
-        data() {
-          return {
-            code: country.code,
-            name: country.name
-          };
-        }
-      });
+
+    async openSourcePage(source) {
+      this.$store.commit('updateSourcePageInfo', source);
+      this.pageStack.push(SourcePage);
     }
   }
 };

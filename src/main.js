@@ -1,16 +1,19 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import VueOnsen from 'vue-onsenui'
-import App from './App'
-import newsService from './services/newsService';
-
 import 'onsenui/css/onsenui.css';
 import 'onsenui/css/onsen-css-components.css';
 
+import Vue from 'vue'
+import VueOnsen from 'vue-onsenui'
+
+import App from './components/App'
+import newsService from './services/newsService';
+import {
+  store
+} from './store';
+
 Vue.use(VueOnsen);
 
-const service = new newsService();
 
 // service.getSources().then(sources => sources.map(source => {
 //   console.log(source.url);
@@ -25,6 +28,7 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   components: {
     App
   },
