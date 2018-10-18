@@ -5,72 +5,138 @@
       <v-ons-back-button>
         <p>Back</p>
       </v-ons-back-button>
-      <p class="center">{{ sourceInfo.title }}</p>
+      <p class="center">{{ sourceInfo.name }}</p>
     </v-ons-toolbar>
 
+    <div class="info-container">
+      <div class="img-box">
+        <img :alt="sourceInfo.name" :src="iconUrl">
+      </div>
 
-    <div>
-      <img :alt="sourceInfo.title" :src="iconUrl">
+      <div class="description">
+        <p>{{ sourceInfo.description }} </p>
+      </div>
+
+      <div class="other-info">
+        <div class="labels">
+          <p><span>source:</span></p>
+          <p><span>category:</span></p>
+          <p><span>language:</span></p>
+        </div>
+        <div>
+          <p><em><a :href="sourceInfo.url">{{ sourceInfo.url }}</a></em></p>
+          <p><em>{{sourceInfo.category }}</em></p>
+          <p><em>{{ sourceInfo.language }}</em></p>
+        </div>
+      </div>
     </div>
 
-    <p> {{ sourceInfo.description }} </p>
+    <div class="carousel">
+      <h4> Top headlines from {{ sourceInfo.name }} right now </h4>
+      <p> Showing article {{ carouselIndex + 1 }} / {{ articles.length }} </p>
 
-    <p> {{sourceInfo.id}} </p>
+      <v-ons-carousel fullscreen swipeable auto-scroll overscrollable :index.sync="carouselIndex">
+        <v-ons-carousel-item v-for="(article, index) in articles" :key="index">
+          <div>
+            <img alt="article image" :src="article.urlToImage">
+          </div>
 
-    <p> {{sourceInfo.category }} </p>
-
-    <p> {{ sourceInfo.language }}</p>
-
-    <v-ons-carousel fullscreen swipeable auto-scroll overscrollable :index.sync="carouselIndex">
-      <v-ons-carousel-item v-for="(article, index) in articles" :key="index">
-
-        <div>
-         <img alt="article image" :src="article.urlToImage">
-        </div>
-
-        <p>{{ article.title }}</p>
-        <p>{{ article.author }}</p>
-        <p>{{ article.url }}</p>
-        <p>{{ article.content }}</p>
-      </v-ons-carousel-item>
-    </v-ons-carousel>
-
+          <h4>{{ article.title }}</h4>
+          <!-- <p>{{ article.author }}</p> -->
+          <p>{{ article.description }}</p>
+          <p>{{ article.content }}</p>
+          <p>{{ article.url }}</p>
+        </v-ons-carousel-item>
+      </v-ons-carousel>
+    </div>
   </v-ons-page>
 </template>
 
 <script>
-import { getTopHeadlinesFromSource } from '@/services/newsService';
-export default {
-  data() {
-    return {
-      carouselIndex: 0,
-      articles: []
-    };
-  },
+  import {
+    getTopHeadlinesFromSource
+  } from '@/services/newsService';
 
-  computed: {
-    iconUrl() {
-      return `https://icon-locator.herokuapp.com/icon?url=${this.sourceInfo.url}&amp;size=70..120..200`;
+  export default {
+    data() {
+      return {
+        carouselIndex: 0,
+        articles: []
+      };
     },
-    sourceInfo() {
-      return this.$store.state.sourcePage.info;
-    },
-  },
 
-  methods: {
-    async getArticles() {
-      this.articles = await getTopHeadlinesFromSource(this.sourceInfo.id)
+    computed: {
+      iconUrl() {
+        return `https://icon-locator.herokuapp.com/icon?url=${this.sourceInfo.url}&amp;size=70..120..200`;
+      },
+      sourceInfo() {
+        return this.$store.state.sourcePage.info;
+      },
+
+      name() {
+        return sourceInfo.name !== '' ? sourceInfo.name : 'No title'
+      }
+
+    },
+
+    methods: {
+      async getArticles() {
+        this.articles = await getTopHeadlinesFromSource(this.sourceInfo.id)
+        console.log(this.articles)
+      }
+    },
+
+    created() {
+      this.getArticles();
     }
-  },
+  };
 
-  created() {
-    this.getArticles();
-  }
-};
 </script>
 
-<style>
-img {
-  max-width: 100%
-}
+<style scoped>
+  .info-container {
+    display: grid;
+    padding: 1rem;
+    grid-gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 1rem;
+    box-shadow: 0 2px rgba(173, 173, 173, 0.459);
+    background: white;
+    margin-bottom: 1rem;
+  }
+
+  .info-container p {
+    margin: 0;
+    text-align: left;
+  } */
+
+  .img-box > img {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .other-info {
+    grid-column-end: span 2;
+    display: flex;
+  }
+
+  .labels {
+    width: 25%;
+  }
+
+  .other-info em {
+    margin-left: 0.5rem;
+  }
+
+  .other-info> p {
+    margin: 0;
+  }
+
+  .carousel>h4 {
+    padding: 0 1rem;
+  }
+
 </style>
