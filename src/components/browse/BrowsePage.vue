@@ -63,7 +63,7 @@ export default {
       {
         category: 'general',
         country: 'us',
-        description: 'This is a description',
+        description: 'This is a description. Lorem Ipsum I need this text to be longer, so i looks better. Mikkel is a sexy motherfucker',
         id: 'abc-news',
         language: 'en',
         name: 'ABC News',
